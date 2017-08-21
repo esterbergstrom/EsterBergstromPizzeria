@@ -34,7 +34,10 @@ namespace InMemoryDatabase.Controllers
             }
 
             var dish = await _context.Dishes
+                .Include(x => x.DishIngredients)
+                .ThenInclude(x => x.Ingredient)
                 .SingleOrDefaultAsync(m => m.ID == id);
+
             if (dish == null)
             {
                 return NotFound();

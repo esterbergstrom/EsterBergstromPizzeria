@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace InMemoryDatabase.Models
 {
-    public class Dish
+    public class Ingredient
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
         public List<DishIngredient> DishIngredients { get; set; }
     }
 }

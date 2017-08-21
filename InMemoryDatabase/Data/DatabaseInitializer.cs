@@ -12,16 +12,9 @@ namespace InMemoryDatabase.Data
         public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             roleManager.CreateAsync(new IdentityRole("Administrator"));
+            CreateUsers(userManager);
 
-            if (userManager.Users.Count() <= 0)
-            {
-                CreateUsers(userManager);
-            }
-
-            if (context.Dishes.Count() <= 0)
-            {
-                CreateDishes(context);
-            }
+            CreateDishes(context);
         }
 
         private static void CreateUsers(UserManager<ApplicationUser> userManager)
@@ -45,28 +38,75 @@ namespace InMemoryDatabase.Data
 
         private static void CreateDishes(ApplicationDbContext context)
         {
-            var pizzas = new List<Dish>()
+            var margarita = new Dish()
             {
-                new Dish()
+                Name = "Margarita",
+                Price = 65
+            };
+            var bosola = new Dish()
+            {
+                Name = "Bosola",
+                Price = 82
+            };
+            var tigris = new Dish()
+            {
+                Name = "Tigris",
+                Price = 85
+            };
+
+            var ingredients = new Dictionary<string, Ingredient>();
+            ingredients.Add("Mozzarella", new Ingredient() { Name = "Mozzarella" });
+            ingredients.Add("Parmesan", new Ingredient() { Name = "Parmesan" });
+            ingredients.Add("Tomatoes", new Ingredient() { Name = "Tomatoes" });
+            ingredients.Add("Ham", new Ingredient() { Name = "Ham" });
+            ingredients.Add("Prawns", new Ingredient() { Name = "Prawns" });
+            ingredients.Add("Onions", new Ingredient() { Name = "Onions" });
+
+            margarita.DishIngredients = new List<DishIngredient>()
+            {
+                new DishIngredient()
                 {
-                    Name = "Margarita",
-                    Price = 65
+                    Dish = margarita,
+                    Ingredient = ingredients["Mozzarella"]
                 },
-                new Dish()
+                new DishIngredient()
                 {
-                    Name = "Bosola",
-                    Price = 82
+                    Dish = margarita,
+                    Ingredient = ingredients["Parmesan"]
                 },
-                new Dish()
+                new DishIngredient()
                 {
-                    Name = "Tigris",
-                    Price = 85
+                    Dish = margarita,
+                    Ingredient = ingredients["Tomatoes"]
                 }
             };
 
-            context.AddRange(pizzas);
+            bosola.DishIngredients = new List<DishIngredient>()
+            {
+                new DishIngredient()
+                {
+                    Dish = margarita,
+                    Ingredient = ingredients["Ham"]
+                },
+                new DishIngredient()
+                {
+                    Dish = margarita,
+                    Ingredient = ingredients["Prawns"]
+                }
+            };
+
+            tigris.DishIngredients = new List<DishIngredient>()
+            {
+                new DishIngredient()
+                {
+                    Dish = margarita,
+                    Ingredient = ingredients["Onions"]
+                }
+            };
+
+            context.Dishes.AddRange(margarita, bosola, tigris);
+            context.Ingredients.AddRange(ingredients.Values);
             context.SaveChanges();
         }
-             
     }
 }
