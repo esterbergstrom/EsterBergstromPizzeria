@@ -13,8 +13,8 @@ namespace InMemoryDatabase.Data
         {
             var user = new ApplicationUser()
             {
-                UserName = "jane.doe@gmail.com",
-                Email = "jane.doe@gmail.com"
+                UserName = "student@test.com",
+                Email = "student@test.com"
             };
 
             userManager.CreateAsync(user, "Password123!");
