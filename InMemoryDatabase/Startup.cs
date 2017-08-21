@@ -41,7 +41,7 @@ namespace InMemoryDatabase
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -65,7 +65,7 @@ namespace InMemoryDatabase
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DatabaseInitializer.Initialize(userManager);
+            DatabaseInitializer.Initialize(context, userManager);
         }
     }
 }
