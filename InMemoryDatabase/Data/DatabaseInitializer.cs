@@ -20,7 +20,6 @@ namespace InMemoryDatabase.Data
             {
                 CreateDishes(context);
             }
-
         }
 
         private static void CreateUsers(UserManager<ApplicationUser> userManager)
