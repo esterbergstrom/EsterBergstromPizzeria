@@ -9,8 +9,10 @@ namespace InMemoryDatabase.Data
 {
     public static class DatabaseInitializer
     {
-        public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+            roleManager.CreateAsync(new IdentityRole("Administrator"));
+
             if (userManager.Users.Count() <= 0)
             {
                 CreateUsers(userManager);
@@ -24,13 +26,21 @@ namespace InMemoryDatabase.Data
 
         private static void CreateUsers(UserManager<ApplicationUser> userManager)
         {
-            var user = new ApplicationUser()
+            var regularUser = new ApplicationUser()
             {
                 UserName = "student@test.com",
                 Email = "student@test.com"
             };
+            var adminUser = new ApplicationUser()
+            {
+                UserName = "admin@test.com",
+                Email = "admin@test.com"
+            };
 
-            userManager.CreateAsync(user, "Password123!");
+            userManager.CreateAsync(regularUser, "Password123!");
+            userManager.CreateAsync(adminUser, "Password123!");
+
+            userManager.AddToRoleAsync(adminUser, "Administrator");
         }
 
         private static void CreateDishes(ApplicationDbContext context)
