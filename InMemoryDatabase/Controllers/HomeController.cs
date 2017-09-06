@@ -18,6 +18,7 @@ namespace InMemoryDatabase.Controllers
             _context = context;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var dishes = _context.Dishes
@@ -30,21 +31,24 @@ namespace InMemoryDatabase.Controllers
                 Category = Enums.DishCategory.ItalianPizza,
                 Dishes = dishes
             };
+
             return View(viewModel);
         }
 
-        public IActionResult About()
+        [HttpPost]
+        public IActionResult Index(Enums.DishCategory category)
         {
-            ViewData["Message"] = "Your application description page.";
+            var dishes = _context.Dishes
+                .Where(x => x.Category == category)
+                .Select(x => x)
+                .ToList();
 
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            var viewModel = new HomeViewModel()
+            {
+                Category = category,
+                Dishes = dishes
+            };
+            return View(viewModel);
         }
 
         public IActionResult Error()

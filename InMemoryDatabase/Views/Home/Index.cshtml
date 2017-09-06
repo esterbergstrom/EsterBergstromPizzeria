@@ -1,27 +1,21 @@
-﻿@model HomeViewModel
+﻿@using InMemoryDatabase.Helpers
+@model HomeViewModel
 @{
-    var selectedCategory = String.Empty;
-    var availableCategories = new List<string>();
+    var categories = CategoryHelper.EnumsToList();
 
-    switch (Model.Category)
+    if (categories.Contains(Model.Category))
     {
-        case Enums.DishCategory.ItalianPizza:
-            selectedCategory = "Italienska pizzor";
-            availableCategories.Add("Specialpizzor");
-            availableCategories.Add("Sallader");
-            break;
-        case Enums.DishCategory.SpecialPizza:
-            selectedCategory = "Specialpizzor";
-            availableCategories.Add("Italienska pizzor");
-            availableCategories.Add("Sallader");
-            break;
-        case Enums.DishCategory.Salad:
-            selectedCategory = "Sallader";
-            availableCategories.Add("Italienska pizzor");
-            availableCategories.Add("Specialpizzor");
-            break;
+        categories.Remove(Model.Category);
     }
+
+    var categoryMenuViewModel = new CategoryMenuViewModel()
+    {
+        SelectedCategory = Model.Category,
+        AvailableCategories = categories
+    };
 }
+
+@Html.Partial("_CategoryMenu", categoryMenuViewModel)
 
 @foreach (var dish in Model.Dishes)
 {

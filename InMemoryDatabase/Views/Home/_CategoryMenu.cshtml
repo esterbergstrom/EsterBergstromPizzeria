@@ -1,0 +1,22 @@
+﻿@using InMemoryDatabase.Helpers
+@model CategoryMenuViewModel
+
+<div class="category-menu">
+
+    <p class="category category--selected">@CategoryHelper.EnumToString(Model.SelectedCategory)</p>
+
+    <ul class="category-menu__list">
+        @foreach (var category in Model.AvailableCategories)
+        {
+            <li class="category-menu__list-item">
+                @using (Html.BeginForm("Index", "Home", new { category } , FormMethod.Post))
+                {
+                    <input class="category" type="submit" value="@CategoryHelper.EnumToString(category)" />
+                }
+            </li>
+        }
+    </ul>
+
+    <div class="category-menu-overlay"></div>
+
+</div>

@@ -2,6 +2,7 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    vertical-align: top;
     box-sizing: border-box;
     width: 49%;
     padding: 1.5em 1em;
