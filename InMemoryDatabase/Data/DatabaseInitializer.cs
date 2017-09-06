@@ -11,14 +11,14 @@ namespace InMemoryDatabase.Data
     {
         public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            roleManager.CreateAsync(new IdentityRole("Administrator"));
-            CreateUsers(userManager);
-
+            CreateUsers(userManager, roleManager);
             CreateDishes(context);
         }
 
-        private static void CreateUsers(UserManager<ApplicationUser> userManager)
+        private static void CreateUsers(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+            roleManager.CreateAsync(new IdentityRole("Administrator"));
+
             var regularUser = new ApplicationUser()
             {
                 UserName = "student@test.com",
@@ -35,77 +35,86 @@ namespace InMemoryDatabase.Data
 
             userManager.AddToRoleAsync(adminUser, "Administrator");
         }
-
+        
         private static void CreateDishes(ApplicationDbContext context)
         {
-            var margarita = new Dish()
+            var dishes = new List<Dish>()
             {
-                Name = "Margarita",
-                Price = 65
-            };
-            var bosola = new Dish()
-            {
-                Name = "Bosola",
-                Price = 82
-            };
-            var tigris = new Dish()
-            {
-                Name = "Tigris",
-                Price = 85
-            };
-
-            var ingredients = new Dictionary<string, Ingredient>();
-            ingredients.Add("Mozzarella", new Ingredient() { Name = "Mozzarella" });
-            ingredients.Add("Parmesan", new Ingredient() { Name = "Parmesan" });
-            ingredients.Add("Tomatoes", new Ingredient() { Name = "Tomatoes" });
-            ingredients.Add("Ham", new Ingredient() { Name = "Ham" });
-            ingredients.Add("Prawns", new Ingredient() { Name = "Prawns" });
-            ingredients.Add("Onions", new Ingredient() { Name = "Onions" });
-
-            margarita.DishIngredients = new List<DishIngredient>()
-            {
-                new DishIngredient()
+                new Dish()
                 {
-                    Dish = margarita,
-                    Ingredient = ingredients["Mozzarella"]
+                    Name = "Margherita",
+                    Price = 65,
+                    Category = Enums.DishCategory.ItalianPizza,
+                    Description = "Tomatsås, ost",
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
                 },
-                new DishIngredient()
+                new Dish()
                 {
-                    Dish = margarita,
-                    Ingredient = ingredients["Parmesan"]
+                    Name = "Vesuvio",
+                    Price = 65,
+                    Category = Enums.DishCategory.ItalianPizza,
+                    Description = "Skinka",
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
                 },
-                new DishIngredient()
+                new Dish()
                 {
-                    Dish = margarita,
-                    Ingredient = ingredients["Tomatoes"]
+                    Name = "Tonno",
+                    Price = 65,
+                    Category = Enums.DishCategory.ItalianPizza,
+                    Description = "Tonfisk",
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                },
+                new Dish()
+                {
+                    Name = "Amalfi",
+                    Price = 65,
+                    Category = Enums.DishCategory.ItalianPizza,
+                    Description = "Räkor",
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                },
+                new Dish()
+                {
+                    Name = "Funghi",
+                    Price = 65,
+                    Category = Enums.DishCategory.ItalianPizza,
+                    Description = "Champinjoner",
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                },
+                new Dish()
+                {
+                    Name = "Calzone",
+                    Price = 85,
+                    Category = Enums.DishCategory.SpecialPizza,
+                    Description = "Skinka, räkor, svamp",
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                },
+                new Dish()
+                {
+                    Name = "Fantasia",
+                    Price = 85,
+                    Category = Enums.DishCategory.SpecialPizza,
+                    Description = "Skinka, salami, paprika, lök",
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                },
+                new Dish()
+                {
+                    Name = "Ost- och skinksallad",
+                    Price = 80,
+                    Category = Enums.DishCategory.Salad,
+                    Description = "Isbergssallad, tomat, paprika, gurka, ost, skinka, ägg",
+                    ImageURL = "http://graphics.frontiercoop.com/grilling/simplyorganic/imgs/topdown/top-down-pasta.png"
+                },
+                new Dish()
+                {
+                    Name = "Räksallad",
+                    Price = 80,
+                    Category = Enums.DishCategory.Salad,
+                    Description = "Isbergssallad, tomat, paprika, gurka, räkor, ägg",
+                    ImageURL = "http://graphics.frontiercoop.com/grilling/simplyorganic/imgs/topdown/top-down-pasta.png"
                 }
             };
 
-            bosola.DishIngredients = new List<DishIngredient>()
-            {
-                new DishIngredient()
-                {
-                    Dish = margarita,
-                    Ingredient = ingredients["Ham"]
-                },
-                new DishIngredient()
-                {
-                    Dish = margarita,
-                    Ingredient = ingredients["Prawns"]
-                }
-            };
-
-            tigris.DishIngredients = new List<DishIngredient>()
-            {
-                new DishIngredient()
-                {
-                    Dish = margarita,
-                    Ingredient = ingredients["Onions"]
-                }
-            };
-
-            context.Dishes.AddRange(margarita, bosola, tigris);
-            context.Ingredients.AddRange(ingredients.Values);
+            context.Dishes.AddRange(dishes);
             context.SaveChanges();
         }
     }

@@ -9,7 +9,9 @@ namespace InMemoryDatabase.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
-        public List<DishIngredient> DishIngredients { get; set; }
+        public double Price { get; set; }
+        public string Description { get; set; }
+        public Enums.DishCategory Category { get; set; }
+        public string ImageURL { get; set; }
     }
 }

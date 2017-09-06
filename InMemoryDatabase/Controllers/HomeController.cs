@@ -5,14 +5,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using InMemoryDatabase.Models;
+using InMemoryDatabase.Data;
 
 namespace InMemoryDatabase.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var dishes = _context.Dishes
+                .Where(x => x.Category == Enums.DishCategory.ItalianPizza)
+                .Select(x => x)
+                .ToList();
+
+            var viewModel = new HomeViewModel()
+            {
+                Category = Enums.DishCategory.ItalianPizza,
+                Dishes = dishes
+            };
+            return View(viewModel);
         }
 
         public IActionResult About()

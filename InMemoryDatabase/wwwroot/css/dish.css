@@ -1,0 +1,32 @@
+﻿.dish {
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 49%;
+    padding: 1.5em 1em;
+}
+
+.dish__image {
+    background-position: center;
+    background-size: cover;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding-bottom: 90%;
+    border: 0.5em solid #7EBDC2;
+    border-radius: 50%;
+}
+
+.dish__heading {
+    color: #EFE6DD;
+    font-weight: normal;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.dish__description {
+    color: #EFE6DD;
+    text-transform: lowercase;
+    margin: 0;
+}
