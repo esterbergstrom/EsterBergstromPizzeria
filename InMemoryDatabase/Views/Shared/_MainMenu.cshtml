@@ -8,10 +8,12 @@
 
         @foreach (var category in ViewData["Categories"] as string[])
         {
+            var className = category == ViewData["SelectedCategory"] as string ? "main-menu-link main-menu-link--selected" : "main-menu-link";
+
             <li class="main-menu-list__item">
                 @using (Html.BeginForm("Index", "Home", new { category }, FormMethod.Post))
                 {
-                    <input class="main-menu-list__link" type="submit" value="@category" />
+                    <input class="@className" type="submit" value="@category" />
                 }
             </li>
         }

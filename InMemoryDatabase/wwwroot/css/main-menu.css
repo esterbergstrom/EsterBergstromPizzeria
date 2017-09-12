@@ -41,7 +41,7 @@
     list-style: none;
 }
 
-.main-menu-list__link {
+.main-menu-link {
     color: #231F20;
     background-color: transparent;
     font-size: 1.5em;
@@ -49,4 +49,8 @@
     margin: 0;
     padding: 0;
     border: 0;
+}
+
+.main-menu-link--selected {
+    color: #BB4430;
 }
