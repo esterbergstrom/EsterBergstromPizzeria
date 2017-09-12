@@ -1,23 +1,35 @@
-﻿@using InMemoryDatabase.Helpers
-@model HomeViewModel
-@{
-    var categories = CategoryHelper.EnumsToList();
+﻿@model HomeViewModel
 
-    if (categories.Contains(Model.Category))
-    {
-        categories.Remove(Model.Category);
-    }
+<div class="category-menu">
 
-    var categoryMenuViewModel = new CategoryMenuViewModel()
-    {
-        SelectedCategory = Model.Category,
-        AvailableCategories = categories
-    };
-}
+    <p class="category category--selected">@Model.SelectedCategory.Name</p>
 
-@Html.Partial("_CategoryMenu", categoryMenuViewModel)
+    <ul class="category-menu__list">
+        @foreach (var category in Model.AvailableCategories)
+        {
+            <li class="category-menu__list-item">
+                @using (Html.BeginForm("Index", "Home", new { category.CategoryId }, FormMethod.Post))
+                {
+                    <input class="category" type="submit" value="@category.Name" />
+                }
+            </li>
+        }
+    </ul>
+
+    <div class="category-menu-overlay"></div>
+
+</div>
+
+
+
 
 @foreach (var dish in Model.Dishes)
 {
-    @Html.Partial("_Dish", dish)
+    <div class="dish">
+
+        <div class="dish__image" style="background-image: url(@dish.ImageURL);"></div>
+        <h3 class="dish__heading">@dish.Name</h3>
+        <p class="dish__description">@dish.Description</p>
+
+    </div>
 }

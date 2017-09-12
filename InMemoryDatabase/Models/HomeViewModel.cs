@@ -7,7 +7,9 @@ namespace InMemoryDatabase.Models
 {
     public class HomeViewModel
     {
-        public Enums.DishCategory Category { get; set; }
         public List<Dish> Dishes { get; set; }
+
+        public Category SelectedCategory { get; set; }
+        public List<Category> AvailableCategories { get; set; }
     }
 }

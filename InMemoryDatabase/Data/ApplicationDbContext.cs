@@ -15,6 +15,7 @@ namespace InMemoryDatabase.Data
         {
         }
 
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Dish> Dishes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -21,32 +21,48 @@ namespace InMemoryDatabase.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var categoryId = _context.Categories
+                .Where(x => x.Name == "Italienska pizzor")
+                .First()
+                .CategoryId;
+
             var dishes = _context.Dishes
-                .Where(x => x.Category == Enums.DishCategory.ItalianPizza)
+                .Where(x => x.Category.CategoryId == categoryId)
                 .Select(x => x)
                 .ToList();
 
+            var availableCategories = _context.Categories.ToList();
+
+            var selectedCategory = availableCategories.Find(x => x.CategoryId == categoryId);
+            availableCategories.Remove(selectedCategory);
+
             var viewModel = new HomeViewModel()
             {
-                Category = Enums.DishCategory.ItalianPizza,
-                Dishes = dishes
+                Dishes = dishes,
+                SelectedCategory = selectedCategory,
+                AvailableCategories = availableCategories
             };
-
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Index(Enums.DishCategory category)
+        public IActionResult Index(int categoryId)
         {
             var dishes = _context.Dishes
-                .Where(x => x.Category == category)
+                .Where(x => x.Category.CategoryId == categoryId)
                 .Select(x => x)
                 .ToList();
 
+            var availableCategories = _context.Categories.ToList();
+
+            var selectedCategory = availableCategories.Find(x => x.CategoryId == categoryId);
+            availableCategories.Remove(selectedCategory);
+
             var viewModel = new HomeViewModel()
             {
-                Category = category,
-                Dishes = dishes
+                Dishes = dishes,
+                SelectedCategory = selectedCategory,
+                AvailableCategories = availableCategories
             };
             return View(viewModel);
         }

@@ -38,79 +38,98 @@ namespace InMemoryDatabase.Data
         
         private static void CreateDishes(ApplicationDbContext context)
         {
+            var categories = new List<Category>()
+            {
+                new Category()
+                {
+                    Name = "Italienska pizzor"
+                },
+                new Category()
+                {
+                    Name = "Specialpizzor"
+                },
+                new Category()
+                {
+                    Name = "Sallader"
+                }
+            };
+
+            context.Categories.AddRange(categories);
+            context.SaveChanges();
+
             var dishes = new List<Dish>()
             {
                 new Dish()
                 {
                     Name = "Margherita",
                     Price = 65,
-                    Category = Enums.DishCategory.ItalianPizza,
                     Description = "Tomatsås, ost",
-                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Italienska pizzor").First().CategoryId
                 },
                 new Dish()
                 {
                     Name = "Vesuvio",
                     Price = 65,
-                    Category = Enums.DishCategory.ItalianPizza,
                     Description = "Skinka",
-                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Italienska pizzor").First().CategoryId
                 },
                 new Dish()
                 {
                     Name = "Tonno",
                     Price = 65,
-                    Category = Enums.DishCategory.ItalianPizza,
                     Description = "Tonfisk",
-                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Italienska pizzor").First().CategoryId
                 },
                 new Dish()
                 {
                     Name = "Amalfi",
                     Price = 65,
-                    Category = Enums.DishCategory.ItalianPizza,
                     Description = "Räkor",
-                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Italienska pizzor").First().CategoryId
                 },
                 new Dish()
                 {
                     Name = "Funghi",
                     Price = 65,
-                    Category = Enums.DishCategory.ItalianPizza,
                     Description = "Champinjoner",
-                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Italienska pizzor").First().CategoryId
                 },
                 new Dish()
                 {
                     Name = "Calzone",
                     Price = 85,
-                    Category = Enums.DishCategory.SpecialPizza,
                     Description = "Skinka, räkor, svamp",
-                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Specialpizzor").First().CategoryId
                 },
                 new Dish()
                 {
                     Name = "Fantasia",
                     Price = 85,
-                    Category = Enums.DishCategory.SpecialPizza,
                     Description = "Skinka, salami, paprika, lök",
-                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png"
+                    ImageURL = "https://cdn.modpizza.com/wp-content/uploads/2016/11/mod-pizza-mad-dog-e1479167997381.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Specialpizzor").First().CategoryId
                 },
                 new Dish()
                 {
                     Name = "Ost- och skinksallad",
                     Price = 80,
-                    Category = Enums.DishCategory.Salad,
                     Description = "Isbergssallad, tomat, paprika, gurka, ost, skinka, ägg",
-                    ImageURL = "http://graphics.frontiercoop.com/grilling/simplyorganic/imgs/topdown/top-down-pasta.png"
+                    ImageURL = "http://graphics.frontiercoop.com/grilling/simplyorganic/imgs/topdown/top-down-pasta.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Sallader").First().CategoryId
                 },
                 new Dish()
                 {
                     Name = "Räksallad",
                     Price = 80,
-                    Category = Enums.DishCategory.Salad,
                     Description = "Isbergssallad, tomat, paprika, gurka, räkor, ägg",
-                    ImageURL = "http://graphics.frontiercoop.com/grilling/simplyorganic/imgs/topdown/top-down-pasta.png"
+                    ImageURL = "http://graphics.frontiercoop.com/grilling/simplyorganic/imgs/topdown/top-down-pasta.png",
+                    CategoryId = context.Categories.Where(x => x.Name == "Sallader").First().CategoryId
                 }
             };
 
