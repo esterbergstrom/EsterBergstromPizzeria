@@ -21,41 +21,41 @@ namespace InMemoryDatabase.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var categoryName = "Italienska pizzor";
+            var category = "Italienska pizzor";
 
             var dishes = _context.Dishes
-                .Where(x => x.Category.Name == categoryName)
+                .Where(x => x.Category.Name == category)
+                .Select(x => x)
                 .ToList();
 
-            var categories = _context.Categories.ToList();
-            var categoryNames = new List<string>();
-            foreach (var category in categories)
+            var categories = new List<string>();
+            foreach (var c in _context.Categories.ToList())
             {
-                categoryNames.Add(category.Name);
+                categories.Add(c.Name);
             }
 
-            ViewData["SelectedCategory"] = categoryName;
-            ViewData["Categories"] = categoryNames.ToArray();
+            ViewData["SelectedCategory"] = category;
+            ViewData["Categories"] = categories.ToArray();
 
             return View(dishes);
         }
 
         [HttpPost]
-        public IActionResult Index(string categoryName)
+        public IActionResult Index(string category)
         {
             var dishes = _context.Dishes
-                .Where(x => x.Category.Name == categoryName)
+                .Where(x => x.Category.Name == category)
+                .Select(x => x)
                 .ToList();
 
-            var categories = _context.Categories.ToList();
-            var categoryNames = new List<string>();
-            foreach (var category in categories)
+            var categories = new List<string>();
+            foreach (var c in _context.Categories.ToList())
             {
-                categoryNames.Add(category.Name);
+                categories.Add(c.Name);
             }
 
-            ViewData["SelectedCategory"] = categoryName;
-            ViewData["Categories"] = categoryNames.ToArray();
+            ViewData["SelectedCategory"] = category;
+            ViewData["Categories"] = categories.ToArray();
 
             return View(dishes);
         }
