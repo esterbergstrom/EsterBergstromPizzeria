@@ -21,50 +21,43 @@ namespace InMemoryDatabase.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var categoryId = _context.Categories
-                .Where(x => x.Name == "Italienska pizzor")
-                .First()
-                .CategoryId;
+            var categoryName = "Italienska pizzor";
 
             var dishes = _context.Dishes
-                .Where(x => x.Category.CategoryId == categoryId)
-                .Select(x => x)
+                .Where(x => x.Category.Name == categoryName)
                 .ToList();
 
-            var availableCategories = _context.Categories.ToList();
-
-            var selectedCategory = availableCategories.Find(x => x.CategoryId == categoryId);
-            availableCategories.Remove(selectedCategory);
-
-            var viewModel = new HomeViewModel()
+            var categories = _context.Categories.ToList();
+            var categoryNames = new List<string>();
+            foreach (var category in categories)
             {
-                Dishes = dishes,
-                SelectedCategory = selectedCategory,
-                AvailableCategories = availableCategories
-            };
-            return View(viewModel);
+                categoryNames.Add(category.Name);
+            }
+
+            ViewData["SelectedCategory"] = categoryName;
+            ViewData["Categories"] = categoryNames.ToArray();
+
+            return View(dishes);
         }
 
         [HttpPost]
-        public IActionResult Index(int categoryId)
+        public IActionResult Index(string categoryName)
         {
             var dishes = _context.Dishes
-                .Where(x => x.Category.CategoryId == categoryId)
-                .Select(x => x)
+                .Where(x => x.Category.Name == categoryName)
                 .ToList();
 
-            var availableCategories = _context.Categories.ToList();
-
-            var selectedCategory = availableCategories.Find(x => x.CategoryId == categoryId);
-            availableCategories.Remove(selectedCategory);
-
-            var viewModel = new HomeViewModel()
+            var categories = _context.Categories.ToList();
+            var categoryNames = new List<string>();
+            foreach (var category in categories)
             {
-                Dishes = dishes,
-                SelectedCategory = selectedCategory,
-                AvailableCategories = availableCategories
-            };
-            return View(viewModel);
+                categoryNames.Add(category.Name);
+            }
+
+            ViewData["SelectedCategory"] = categoryName;
+            ViewData["Categories"] = categoryNames.ToArray();
+
+            return View(dishes);
         }
 
         public IActionResult Error()

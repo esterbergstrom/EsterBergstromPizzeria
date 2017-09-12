@@ -1,0 +1,17 @@
+﻿<div class="main-menu">
+
+    <ul class="main-menu-list">
+
+        @foreach (var category in ViewData["Categories"] as string[])
+        {
+            <li class="main-menu-list__item">
+                @using (Html.BeginForm("Index", "Home", new { category }, FormMethod.Post))
+                {
+                    <input class="main-menu-list__link" type="submit" value="@category" />
+                }
+            </li>
+        }
+
+    </ul>
+
+</div>
