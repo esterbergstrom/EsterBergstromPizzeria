@@ -5,16 +5,11 @@ using System.Threading.Tasks;
 
 namespace InMemoryDatabase.Models
 {
-    public class Dish
+    public class Extra
     {
-        public int DishId { get; set; }
+        public int ExtraId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public string Description { get; set; }
-        public string ImageURL { get; set; }
-
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
 
         public ICollection<DishExtra> DishExtras { get; set; }
     }

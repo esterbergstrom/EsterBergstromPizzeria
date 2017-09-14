@@ -12,7 +12,11 @@ namespace InMemoryDatabase.Data
         public static void Initialize(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             CreateUsers(userManager, roleManager);
+
+            CreateCategories(context);
             CreateDishes(context);
+            CreateExtras(context);
+            CreateDishExtras(context);
         }
 
         private static void CreateUsers(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
@@ -35,8 +39,8 @@ namespace InMemoryDatabase.Data
 
             userManager.AddToRoleAsync(adminUser, "Administrator");
         }
-        
-        private static void CreateDishes(ApplicationDbContext context)
+
+        private static void CreateCategories(ApplicationDbContext context)
         {
             var categories = new List<Category>()
             {
@@ -56,7 +60,10 @@ namespace InMemoryDatabase.Data
 
             context.Categories.AddRange(categories);
             context.SaveChanges();
-
+        }
+        
+        private static void CreateDishes(ApplicationDbContext context)
+        {
             var dishes = new List<Dish>()
             {
                 new Dish()
@@ -134,6 +141,56 @@ namespace InMemoryDatabase.Data
             };
 
             context.Dishes.AddRange(dishes);
+            context.SaveChanges();
+        }
+
+        private static void CreateExtras(ApplicationDbContext context)
+        {
+            var extras = new List<Extra>()
+            {
+                new Extra()
+                {
+                    Name = "Pizzasallad",
+                    Price = 15
+                },
+                new Extra()
+                {
+                    Name = "Bearnaisesås",
+                    Price = 15
+                },
+                new Extra()
+                {
+                    Name = "Tomat",
+                    Price = 10
+                },
+                new Extra()
+                {
+                    Name = "Jalapeño",
+                    Price = 10
+                }
+            };
+
+            context.Extras.AddRange(extras);
+            context.SaveChanges();
+        }
+
+        private static void CreateDishExtras(ApplicationDbContext context)
+        {
+            var dishExtras = new List<DishExtra>()
+            {
+                new DishExtra()
+                {
+                    DishId = context.Dishes.Where(x => x.Name == "Margherita").First().DishId,
+                    ExtraId = context.Extras.Where(x => x.Name == "Pizzasallad").First().ExtraId
+                },
+                new DishExtra()
+                {
+                    DishId = context.Dishes.Where(x => x.Name == "Margherita").First().DishId,
+                    ExtraId = context.Extras.Where(x => x.Name == "Tomat").First().ExtraId
+                }
+            };
+
+            context.DishExtras.AddRange(dishExtras);
             context.SaveChanges();
         }
     }

@@ -1,6 +1,8 @@
 ﻿@model List<Dish>
 
-@foreach (var dish in Model)
-{
-    @Html.Partial("_Dish", dish)
-}
+<div class="dishes">
+    @foreach (var dish in Model)
+    {
+        @Html.Partial("_Dish", dish)
+    }
+</div>
