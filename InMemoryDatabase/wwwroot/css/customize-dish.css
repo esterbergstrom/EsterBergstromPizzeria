@@ -12,3 +12,54 @@
     border: 0.5em solid #EFE6DD;
     border-radius: 50%;
 }
+
+.extras-container {
+    margin: 2em 0;
+}
+
+.extra {
+    text-align: center;
+    display: inline-block;
+    box-sizing: border-box;
+    width: 49%;
+    padding: 1.5em;
+}
+
+.extra__checkbox {
+    -webkit-appearance: none;
+    background-position: center;
+    background-size: cover;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding-bottom: 100%;
+    border-radius: 50%;
+}
+
+.extra__checkbox:checked {
+    border: 0.5em solid #7EBDC2;
+}
+
+.extra__heading {
+    font-weight: normal;
+    font-size: 1.4em;
+    margin: 0;
+}
+
+.extra__price {
+    text-transform: lowercase;
+    margin: 0;
+}
+
+.customize-dish-form__submit {
+    color: #EFE6DD;
+    background-color: #BB4430;
+    font-size: 1em;
+    text-transform: uppercase;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1.4em 0;
+    border: none;
+}

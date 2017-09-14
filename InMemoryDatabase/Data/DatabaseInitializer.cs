@@ -151,22 +151,26 @@ namespace InMemoryDatabase.Data
                 new Extra()
                 {
                     Name = "Pizzasallad",
-                    Price = 15
+                    Price = 15,
+                    ImageURL = "http://www.ganzomag.com/wp-content/uploads/2013/08/sliced-tomatoes-dan-iggers.jpg"
                 },
                 new Extra()
                 {
                     Name = "Bearnaisesås",
-                    Price = 15
+                    Price = 15,
+                    ImageURL = "http://www.ganzomag.com/wp-content/uploads/2013/08/sliced-tomatoes-dan-iggers.jpg"
                 },
                 new Extra()
                 {
                     Name = "Tomat",
-                    Price = 10
+                    Price = 10,
+                    ImageURL = "http://www.ganzomag.com/wp-content/uploads/2013/08/sliced-tomatoes-dan-iggers.jpg"
                 },
                 new Extra()
                 {
                     Name = "Jalapeño",
-                    Price = 10
+                    Price = 10,
+                    ImageURL = "http://www.ganzomag.com/wp-content/uploads/2013/08/sliced-tomatoes-dan-iggers.jpg"
                 }
             };
 

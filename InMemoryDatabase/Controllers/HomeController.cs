@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using InMemoryDatabase.Models;
 using InMemoryDatabase.Data;
+using Microsoft.AspNetCore.Http;
+using InMemoryDatabase.Extensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InMemoryDatabase.Controllers
 {
     public class HomeController : Controller
     {
+        private const string CartItemsSessionKey = "_CartItems";
         private ApplicationDbContext _context;
 
         public HomeController(ApplicationDbContext context)
@@ -55,16 +59,12 @@ namespace InMemoryDatabase.Controllers
                 .Where(x => x.DishId == dishId)
                 .First();
 
-            var extras = new List<Extra>();
-            var dishExtras = _context.DishExtras
+            var extras = _context.DishExtras
                 .Where(x => x.Dish == dish)
+                .Select(x => x.Extra)
                 .ToList();
-            foreach (var dishExtra in dishExtras)
-            {
-                extras.Add(dishExtra.Extra);
-            }
 
-            var viewModel = new CustomizeDishViewModel()
+            var model = new CartItem()
             {
                 Dish = dish,
                 Extras = extras
@@ -73,12 +73,22 @@ namespace InMemoryDatabase.Controllers
             ViewData["CurrentPage"] = dish.Name;
             ViewData["Categories"] = GetAllCategories();
 
-            return View(viewModel);
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult CustomizeDish()
+        public IActionResult CustomizeDish(CartItem cartItem)
         {
+            var cartItems = HttpContext.Session.Get<List<CartItem>>(CartItemsSessionKey);
+            if (cartItems == null)
+            {
+                cartItems = new List<CartItem>();
+            }
+
+            cartItems.Add(cartItem);
+
+            HttpContext.Session.Set<List<CartItem>>(CartItemsSessionKey, cartItems);
+
             return RedirectToAction("Index");
         }
 

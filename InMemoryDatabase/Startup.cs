@@ -42,6 +42,14 @@ namespace InMemoryDatabase
             services.AddMvc();
 
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".EsterBergstromPizzeria.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +69,8 @@ namespace InMemoryDatabase
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
