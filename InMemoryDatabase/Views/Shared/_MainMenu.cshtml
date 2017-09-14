@@ -8,7 +8,7 @@
 
         @foreach (var category in ViewData["Categories"] as string[])
         {
-            var className = category == ViewData["SelectedCategory"] as string ? "main-menu-link main-menu-link--selected" : "main-menu-link";
+            var className = category == ViewData["CurrentPage"] as string ? "main-menu-link main-menu-link--selected" : "main-menu-link";
 
             <li class="main-menu-list__item">
                 @using (Html.BeginForm("Index", "Home", new { category }, FormMethod.Post))

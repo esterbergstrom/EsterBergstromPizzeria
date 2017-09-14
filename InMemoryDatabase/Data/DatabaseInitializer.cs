@@ -174,19 +174,19 @@ namespace InMemoryDatabase.Data
             context.SaveChanges();
         }
 
-        private static void CreateDishExtras(ApplicationDbContext context)
+        public static void CreateDishExtras(ApplicationDbContext context)
         {
             var dishExtras = new List<DishExtra>()
             {
                 new DishExtra()
                 {
-                    DishId = context.Dishes.Where(x => x.Name == "Margherita").First().DishId,
-                    ExtraId = context.Extras.Where(x => x.Name == "Pizzasallad").First().ExtraId
+                    Dish = context.Dishes.Where(x => x.Name == "Margherita").First(),
+                    Extra = context.Extras.Where(x => x.Name == "Pizzasallad").First()
                 },
                 new DishExtra()
                 {
-                    DishId = context.Dishes.Where(x => x.Name == "Margherita").First().DishId,
-                    ExtraId = context.Extras.Where(x => x.Name == "Tomat").First().ExtraId
+                    Dish = context.Dishes.Where(x => x.Name == "Margherita").First(),
+                    Extra = context.Extras.Where(x => x.Name == "Tomat").First()
                 }
             };
 

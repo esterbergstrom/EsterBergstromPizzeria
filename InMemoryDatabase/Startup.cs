@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using InMemoryDatabase.Data;
 using InMemoryDatabase.Models;
 using InMemoryDatabase.Services;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace InMemoryDatabase
 {
@@ -39,6 +40,8 @@ namespace InMemoryDatabase
             services.AddTransient<RoleManager<IdentityRole>>();
 
             services.AddMvc();
+
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

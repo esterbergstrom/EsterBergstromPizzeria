@@ -9,7 +9,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <title>Pizzeria</title>
+        <title>@ViewData["CurrentPage"]</title>
         
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="~/css/main-menu.css" />
         <link rel="stylesheet" href="~/css/home.css" />
         <link rel="stylesheet" href="~/css/dish.css" />
+        <link rel="stylesheet" href="~/css/customize-dish.css" />
 
     </head>
 
@@ -24,8 +25,6 @@
 
 
     <body>
-
-        <h1>@ViewData["SelectedCategory"]</h1>
 
         @Html.Partial("_MainMenu")
 

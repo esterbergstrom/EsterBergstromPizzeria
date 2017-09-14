@@ -28,14 +28,8 @@ namespace InMemoryDatabase.Controllers
                 .Select(x => x)
                 .ToList();
 
-            var categories = new List<string>();
-            foreach (var c in _context.Categories.ToList())
-            {
-                categories.Add(c.Name);
-            }
-
-            ViewData["SelectedCategory"] = category;
-            ViewData["Categories"] = categories.ToArray();
+            ViewData["CurrentPage"] = category;
+            ViewData["Categories"] = GetAllCategories();
 
             return View(dishes);
         }
@@ -48,21 +42,61 @@ namespace InMemoryDatabase.Controllers
                 .Select(x => x)
                 .ToList();
 
-            var categories = new List<string>();
-            foreach (var c in _context.Categories.ToList())
-            {
-                categories.Add(c.Name);
-            }
-
-            ViewData["SelectedCategory"] = category;
-            ViewData["Categories"] = categories.ToArray();
+            ViewData["CurrentPage"] = category;
+            ViewData["Categories"] = GetAllCategories();
 
             return View(dishes);
+        }
+
+        [HttpGet]
+        public IActionResult CustomizeDish(int dishId)
+        {
+            var dish = _context.Dishes
+                .Where(x => x.DishId == dishId)
+                .First();
+
+            var extras = new List<Extra>();
+            var dishExtras = _context.DishExtras
+                .Where(x => x.Dish == dish)
+                .ToList();
+            foreach (var dishExtra in dishExtras)
+            {
+                extras.Add(dishExtra.Extra);
+            }
+
+            var viewModel = new CustomizeDishViewModel()
+            {
+                Dish = dish,
+                Extras = extras
+            };
+
+            ViewData["CurrentPage"] = dish.Name;
+            ViewData["Categories"] = GetAllCategories();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult CustomizeDish()
+        {
+            return RedirectToAction("Index");
         }
 
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private string[] GetAllCategories()
+        {
+            var categories = new List<string>();
+
+            foreach (var c in _context.Categories.ToList())
+            {
+                categories.Add(c.Name);
+            }
+
+            return categories.ToArray();
         }
     }
 }

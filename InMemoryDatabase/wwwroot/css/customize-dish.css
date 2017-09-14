@@ -1,0 +1,14 @@
+﻿.dish-image-container {
+    width: 12em;
+    margin: auto;
+}
+
+.dish-image {
+    background-position: center;
+    background-size: cover;
+    box-sizing: border-box;
+    width: 100%;
+    padding-bottom: 90%;
+    border: 0.5em solid #EFE6DD;
+    border-radius: 50%;
+}
