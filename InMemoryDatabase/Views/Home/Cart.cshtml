@@ -7,7 +7,7 @@
     <div class="cart-item">
         <p class="cart-item__dish">@cartItem.Dish.Name</p>
         <ul class="cart-item__extras-list">
-            @foreach (var extra in cartItem.SelectedExtras)
+            @foreach (var extra in cartItem.Extras)
             {
                 <li class="cart-item__extra">@extra.Name</li>
             }
