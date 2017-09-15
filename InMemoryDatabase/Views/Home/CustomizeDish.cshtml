@@ -8,16 +8,21 @@
 
 @using (Html.BeginForm("CustomizeDish", "Home", new { Model }, FormMethod.Post, null, new { @class = "customize-dish-form" }))
 {
+    @Html.HiddenFor(x => x.Dish.DishId)
+
     <div class="extras-container">
-        @foreach (var extra in Model.Extras)
-        {
-            <div class="extra">
-                <input class="extra__checkbox" type="checkbox" name="SelectedExtras" value="@extra" style="background-image: url(@extra.ImageURL);" />
-                <h3 class="extra__heading">@extra.Name</h3>
-                <p class="extra__price">@extra.Price kr</p>
+        @foreach (var extra in Model.AvailableExtras)
+            {
+                var imageURL = Model.Dish.DishExtras.Where(x => x.Extra.ExtraId == int.Parse(extra.Value)).First().Extra.ImageURL;
+                var price = Model.Dish.DishExtras.Where(x => x.Extra.ExtraId == int.Parse(extra.Value)).First().Extra.Price;
+
+                <div class="extra">
+                <input class="extra__checkbox" type="checkbox" name="SelectedExtras" value="@extra.Value" style="background-image: url(@imageURL");" />
+                <h3 class="extra__heading">@extra.Text</h3>
+                <p class="extra__price">@price kr</p>
             </div>
         }
     </div>
 
-    <input class="customize-dish-form__submit" type="submit" value="Lägg i varukorgen" />
+    <input class="customize-dish-form__submit" type="submit" value="Lägg i korgen" />
 }

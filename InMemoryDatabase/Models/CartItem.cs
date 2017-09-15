@@ -9,10 +9,9 @@ namespace InMemoryDatabase.Models
     public class CartItem
     {
         public Dish Dish { get; set; }
-
-        // Extras with a reference to Dish
         public List<Extra> Extras { get; set; }
-        // Extras selected by the user
-        public List<Extra> SelectedExtras { get; set; }
+
+        public List<SelectListItem> AvailableExtras { get; set; }
+        public List<string> SelectedExtras { get; set; }
     }
 }

@@ -59,7 +59,9 @@
     text-transform: uppercase;
     display: block;
     box-sizing: border-box;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto 2em;
     padding: 1.4em 0;
     border: none;
+    border-radius: 8px;
 }

@@ -9,6 +9,7 @@ using InMemoryDatabase.Data;
 using Microsoft.AspNetCore.Http;
 using InMemoryDatabase.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace InMemoryDatabase.Controllers
 {
@@ -61,22 +62,34 @@ namespace InMemoryDatabase.Controllers
                 .Where(x => x.DishId == dishId)
                 .First();
 
-            var extras = _context.DishExtras
+            dish.DishExtras = _context.DishExtras
+                .Include(x => x.Extra)
                 .Where(x => x.Dish == dish)
-                .Select(x => x.Extra)
                 .ToList();
 
-            var model = new CartItem()
+            var selectableExtras = new List<SelectListItem>();
+
+            foreach (var dishExtra in dish.DishExtras)
+            {
+                var extra = new SelectListItem()
+                {
+                    Text = dishExtra.Extra.Name,
+                    Value = dishExtra.Extra.ExtraId.ToString()
+                };
+                selectableExtras.Add(extra);
+            }
+
+            var cartItem = new CartItem()
             {
                 Dish = dish,
-                Extras = extras
+                AvailableExtras = selectableExtras
             };
 
             ViewData["CurrentPage"] = dish.Name;
             ViewData["Categories"] = GetAllCategories();
             ViewData["CartItems"] = GetNumberOfCartItems();
 
-            return View(model);
+            return View(cartItem);
         }
 
         [HttpPost]
@@ -93,6 +106,23 @@ namespace InMemoryDatabase.Controllers
             HttpContext.Session.Set<List<CartItem>>(CartItemsSessionKey, cartItems);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Cart()
+        {
+            var cartItems = HttpContext.Session.Get<List<CartItem>>(CartItemsSessionKey);
+
+            if (cartItems == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            ViewData["CurrentPage"] = "Cart";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
+            return View(cartItems);
         }
 
         public IActionResult Error()

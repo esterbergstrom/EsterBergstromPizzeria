@@ -29,7 +29,7 @@
 
         @Html.Partial("_MainMenu")
 
-        @if ((int)ViewData["CartItems"] > 0)
+        @if ((int)ViewData["CartItems"] > 0 && (string  )ViewData["CurrentPage"] != "Cart")
         {
             @Html.Partial("_CartLink")
         }

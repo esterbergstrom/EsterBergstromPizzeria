@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using InMemoryDatabase.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace InMemoryDatabase.Data
 {
