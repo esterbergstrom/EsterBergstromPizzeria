@@ -15,6 +15,7 @@
 
         <link rel="stylesheet" href="~/css/base.css" />
         <link rel="stylesheet" href="~/css/main-menu.css" />
+        <link rel="stylesheet" href="~/css/cart-link.css" />
         <link rel="stylesheet" href="~/css/home.css" />
         <link rel="stylesheet" href="~/css/dish.css" />
         <link rel="stylesheet" href="~/css/customize-dish.css" />
@@ -27,6 +28,11 @@
     <body>
 
         @Html.Partial("_MainMenu")
+
+        @if ((int)ViewData["CartItems"] > 0)
+        {
+            @Html.Partial("_CartLink")
+        }
 
         <main>
             @RenderBody()

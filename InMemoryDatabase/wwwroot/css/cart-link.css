@@ -1,0 +1,28 @@
+﻿.cart-link {
+    color: #EFE6DD;
+    background-color: #BB4430;
+    font-size: 1em;
+    display: inline-block;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    padding: 0.4em;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 20px;
+}
+
+.cart-link__icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.cart-link__items {
+    color: #BB4430;
+    background-color: #EFE6DD;
+    font-size: 1em; 
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0.2em 0.5em;
+    border-radius: 50%;
+}

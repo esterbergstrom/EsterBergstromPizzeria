@@ -1,7 +1,7 @@
 ﻿.main-menu-button {
     position: fixed;
-    top: 1em;
-    left: 1em;
+    top: 16px;
+    left: 16px;
     padding: 0.3em;
     border-radius: 50%;
 }

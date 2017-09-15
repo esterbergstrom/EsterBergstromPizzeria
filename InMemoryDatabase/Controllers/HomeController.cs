@@ -34,6 +34,7 @@ namespace InMemoryDatabase.Controllers
 
             ViewData["CurrentPage"] = category;
             ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
 
             return View(dishes);
         }
@@ -48,6 +49,7 @@ namespace InMemoryDatabase.Controllers
 
             ViewData["CurrentPage"] = category;
             ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
 
             return View(dishes);
         }
@@ -72,6 +74,7 @@ namespace InMemoryDatabase.Controllers
 
             ViewData["CurrentPage"] = dish.Name;
             ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
 
             return View(model);
         }
@@ -107,6 +110,17 @@ namespace InMemoryDatabase.Controllers
             }
 
             return categories.ToArray();
+        }
+
+        private int GetNumberOfCartItems()
+        {
+            var cartItems = HttpContext.Session.Get<List<CartItem>>(CartItemsSessionKey);
+            if (cartItems == null)
+            {
+                cartItems = new List<CartItem>();
+            }
+
+            return cartItems.Count;
         }
     }
 }

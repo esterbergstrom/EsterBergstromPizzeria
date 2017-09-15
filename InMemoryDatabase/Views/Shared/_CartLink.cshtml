@@ -1,0 +1,8 @@
+﻿@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+            {
+    <button class="cart-link" type="submit">
+        <i class="material-icons cart-link__icon">shopping_cart</i>
+        <span class="cart-link__items">@ViewData["CartItems"]</span>
+    </button>
+
+}
