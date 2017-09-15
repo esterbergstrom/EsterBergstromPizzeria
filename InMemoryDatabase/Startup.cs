@@ -48,7 +48,7 @@ namespace InMemoryDatabase
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".EsterBergstromPizzeria.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromMinutes(45);
             });
         }
 
