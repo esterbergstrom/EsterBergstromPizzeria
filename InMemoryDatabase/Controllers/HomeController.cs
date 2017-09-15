@@ -105,13 +105,16 @@ namespace InMemoryDatabase.Controllers
                 .Where(x => x.DishId == cartItem.Dish.DishId)
                 .First();
 
-            cartItem.Extras = new List<Extra>();
-            foreach (var selectedExtra in cartItem.SelectedExtras)
+            if (cartItem.SelectedExtras != null)
             {
-                var extra = _context.Extras
-                    .Where(x => x.ExtraId == int.Parse(selectedExtra))
-                    .First();
-                cartItem.Extras.Add(extra);
+                cartItem.Extras = new List<Extra>();
+                foreach (var selectedExtra in cartItem.SelectedExtras)
+                {
+                    var extra = _context.Extras
+                        .Where(x => x.ExtraId == int.Parse(selectedExtra))
+                        .First();
+                    cartItem.Extras.Add(extra);
+                }
             }
 
             cartItems.Add(cartItem);

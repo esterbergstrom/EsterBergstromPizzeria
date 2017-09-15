@@ -1,15 +1,40 @@
 ﻿@model List<CartItem>
+@{ 
+    decimal priceSum = 0;
+
+    foreach (var cartItem in Model)
+    {
+        priceSum += cartItem.Dish.Price;
+
+        if (cartItem.Extras != null)
+        {
+            foreach (var extra in cartItem.Extras)
+            {
+                priceSum += extra.Price;
+            }
+        }
+    }
+}
 
 <h1>@ViewData["CurrentPage"]</h1>
 
 @foreach (var cartItem in Model)
 {
     <div class="cart-item">
-        <p class="cart-item__dish">@cartItem.Dish.Name</p>
+        <p class="cart-item-dish">
+            <span class="cart-item-dish__name">@cartItem.Dish.Name</span>
+            <span class="cart-item-dish__price">@cartItem.Dish.Price kr</span>
+        </p>
         <ul class="cart-item__extras-list">
-            @foreach (var extra in cartItem.Extras)
+            @if (cartItem.Extras != null)
             {
-                <li class="cart-item__extra">@extra.Name</li>
+                foreach (var extra in cartItem.Extras)
+                {
+                    <li class="cart-item-extra">
+                        <span class="cart-item-extra__name">@extra.Name</span>
+                        <span class="cart-item-extra__price">@extra.Price</span>
+                    </li>
+                }
             }
         </ul>
     </div>
