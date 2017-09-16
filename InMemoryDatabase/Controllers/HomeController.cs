@@ -123,23 +123,6 @@ namespace InMemoryDatabase.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult Cart()
-        {
-            var cartItems = HttpContext.Session.Get<List<CartItem>>(CartItemsSessionKey);
-
-            if (cartItems == null)
-            {
-                return RedirectToAction("Index");
-            }
-
-            ViewData["CurrentPage"] = "Cart";
-            ViewData["Categories"] = GetAllCategories();
-            ViewData["CartItems"] = GetNumberOfCartItems();
-
-            return View(cartItems);
-        }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
