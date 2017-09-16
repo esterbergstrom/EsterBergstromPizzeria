@@ -44,3 +44,8 @@
     <span class="cart-price-sum__label">Summa: </span>
     <span class="cart-price-sum__value">@priceSum kr</span>
 </p>
+
+@using (Html.BeginForm("Pay", "Payment", FormMethod.Get))
+{
+    <input class="payment-link" type="submit" value="Betala och beställ" />
+}

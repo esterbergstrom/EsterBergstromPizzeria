@@ -1,0 +1,25 @@
+﻿@model BillingInformation
+
+<h1>@ViewData["CurrentPage"]</h1>
+
+@using (Html.BeginForm("Pay", "Payment", new { Model }, FormMethod.Post, null, new { @class = "billing-information-form" }))
+{
+    @Html.HiddenFor(x => x.BillingInformationId)
+
+    @Html.LabelFor(x => x.FullName)
+    @Html.TextBoxFor(x => x.FullName)
+
+    @Html.LabelFor(x => x.StreetAddress)
+    @Html.TextBoxFor(x => x.StreetAddress)
+
+    @Html.LabelFor(x => x.PostalCode)
+    @Html.TextBoxFor(x => x.PostalCode)
+
+    @Html.LabelFor(x => x.PhoneNumber)
+    @Html.TextBoxFor(x => x.PhoneNumber)
+
+    @Html.LabelFor(x => x.Email)
+    @Html.TextBoxFor(x => x.Email)
+
+    <input type = "submit" value = "Beställ" />
+}

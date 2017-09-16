@@ -38,6 +38,40 @@ namespace InMemoryDatabase.Controllers
             return View(cartItems);
         }
 
+        [HttpGet]
+        public IActionResult Pay()
+        {
+            var cartItems = HttpContext.Session.Get<List<CartItem>>(CartItemsSessionKey);
+
+            decimal priceSum = 0;
+            foreach (var cartItem in cartItems)
+            {
+                priceSum += cartItem.Dish.Price;
+
+                if (cartItem.Extras != null)
+                {
+                    foreach (var extra in cartItem.Extras)
+                    {
+                        priceSum += extra.Price;
+                    }
+                }
+            }
+
+            ViewBag.PriceSum = priceSum;
+
+            ViewData["CurrentPage"] = "Payment";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
+            return View(new BillingInformation());
+        }
+
+        [HttpPost]
+        public IActionResult Pay(BillingInformation billingInformation)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         private string[] GetAllCategories()
         {
             var categories = new List<string>();
