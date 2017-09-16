@@ -9,6 +9,9 @@ namespace InMemoryDatabase.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
+        public string FullName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -23,5 +26,16 @@ namespace InMemoryDatabase.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public string StreetAddress { get; set; }
+
+        [Required]
+        [StringLength(5)]
+        public string PostalCode { get; set; }
+
+        [Required]
+        [Phone]
+        public string PhoneNumber { get; set; }
     }
 }

@@ -220,6 +220,11 @@ namespace InMemoryDatabase.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
+            ViewData["CurrentPage"] = "Register";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
             return View();
         }
 
@@ -231,7 +236,18 @@ namespace InMemoryDatabase.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    BillingInformation = new BillingInformation()
+                    {
+                        FullName = model.FullName,
+                        StreetAddress = model.StreetAddress,
+                        PhoneNumber = model.PhoneNumber,
+                        Email = model.Email
+                    }
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -249,6 +265,10 @@ namespace InMemoryDatabase.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            ViewData["CurrentPage"] = "Register";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
             return View(model);
         }
 

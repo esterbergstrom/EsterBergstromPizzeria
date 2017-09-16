@@ -9,5 +9,6 @@ namespace InMemoryDatabase.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public BillingInformation BillingInformation { get; set; }
     }
 }
