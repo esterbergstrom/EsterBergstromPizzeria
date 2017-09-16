@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using InMemoryDatabase.Models;
 using InMemoryDatabase.Models.AccountViewModels;
 using InMemoryDatabase.Services;
+using InMemoryDatabase.Data;
+using InMemoryDatabase.Extensions;
 
 namespace InMemoryDatabase.Controllers
 {
@@ -20,21 +22,25 @@ namespace InMemoryDatabase.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
+        private const string CartItemsSessionKey = "_CartItems";
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private ApplicationDbContext _context;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _context = context;
         }
 
         [TempData]
@@ -48,6 +54,11 @@ namespace InMemoryDatabase.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
+
+            ViewData["CurrentPage"] = "Log in";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
             return View();
         }
 
@@ -457,6 +468,29 @@ namespace InMemoryDatabase.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
+        }
+
+        private string[] GetAllCategories()
+        {
+            var categories = new List<string>();
+
+            foreach (var c in _context.Categories.ToList())
+            {
+                categories.Add(c.Name);
+            }
+
+            return categories.ToArray();
+        }
+
+        private int GetNumberOfCartItems()
+        {
+            var cartItems = HttpContext.Session.Get<List<CartItem>>(CartItemsSessionKey);
+            if (cartItems == null)
+            {
+                cartItems = new List<CartItem>();
+            }
+
+            return cartItems.Count;
         }
 
         #endregion

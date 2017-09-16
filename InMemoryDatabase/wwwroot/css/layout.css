@@ -1,0 +1,15 @@
+﻿.user {
+    background-color: #7EBDC2;
+    text-align: right;
+    margin: 0;
+    padding: 0.5em;
+}
+
+.user__icon {
+    vertical-align: middle;
+}
+
+.user__username {
+    display: inline-block;
+    vertical-align: middle;
+}

@@ -1,4 +1,8 @@
-﻿<i class="material-icons main-menu-button main-menu-button--open">menu</i>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+<i class="material-icons main-menu-button main-menu-button--open">menu</i>
 
 <div class="main-menu main-menu--hidden">
 
@@ -14,6 +18,27 @@
                 @using (Html.BeginForm("Index", "Home", new { category }, FormMethod.Post))
                 {
                     <input class="@className" type="submit" value="@category" />
+                }
+            </li>
+        }
+
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <li class="main-menu-list__item">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Get))
+                {
+                    var className = ViewData["CurrentPage"] as string == "Log in" ? "main-menu-link main-menu-link--selected" : "main-menu-link";
+
+                    <input class="@className" type="submit" value="Log in" />
+                }
+            </li>
+        }
+        else
+        {
+            <li class="main-menu-list__item">
+                @using (Html.BeginForm("Logout", "Account", FormMethod.Post))
+                {
+                    <input class="main-menu-link" type="submit" value="Log out" />
                 }
             </li>
         }
