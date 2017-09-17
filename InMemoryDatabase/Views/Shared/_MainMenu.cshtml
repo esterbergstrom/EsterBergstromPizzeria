@@ -32,6 +32,15 @@
                     <input class="@className" type="submit" value="Log in" />
                 }
             </li>
+
+            <li class="main-menu-list__item">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Get))
+                {
+                    var className = ViewData["CurrentPage"] as string == "Register" ? "main-menu-link main-menu-link--selected" : "main-menu-link";
+
+                    <input class="@className" type="submit" value="Register" />
+                }
+            </li>
         }
         else
         {
