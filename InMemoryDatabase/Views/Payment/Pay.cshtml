@@ -1,25 +1,33 @@
-﻿@model BillingInformation
+﻿@model PayViewModel
 
 <h1>@ViewData["CurrentPage"]</h1>
 
 @using (Html.BeginForm("Pay", "Payment", new { Model }, FormMethod.Post, null, new { @class = "billing-information-form" }))
 {
-    @Html.HiddenFor(x => x.BillingInformationId)
+    <div>
+        @Html.LabelFor(x => x.FullName)
+        @Html.TextBoxFor(x => x.FullName)
+    </div>
 
-    @Html.LabelFor(x => x.FullName)
-    @Html.TextBoxFor(x => x.FullName)
+    <div>
+        @Html.LabelFor(x => x.StreetAddress)
+        @Html.TextBoxFor(x => x.StreetAddress)
+    </div>
 
-    @Html.LabelFor(x => x.StreetAddress)
-    @Html.TextBoxFor(x => x.StreetAddress)
+    <div>
+        @Html.LabelFor(x => x.PostalCode)
+        @Html.TextBoxFor(x => x.PostalCode)
+    </div>
 
-    @Html.LabelFor(x => x.PostalCode)
-    @Html.TextBoxFor(x => x.PostalCode)
+    <div>
+        @Html.LabelFor(x => x.PhoneNumber)
+        @Html.TextBoxFor(x => x.PhoneNumber)
+    </div>
 
-    @Html.LabelFor(x => x.PhoneNumber)
-    @Html.TextBoxFor(x => x.PhoneNumber)
+    <div>
+        @Html.LabelFor(x => x.Email)
+        @Html.TextBoxFor(x => x.Email)
+    </div>
 
-    @Html.LabelFor(x => x.Email)
-    @Html.TextBoxFor(x => x.Email)
-
-    <input type = "submit" value = "Beställ" />
+    <input type="submit" value="Beställ" />
 }

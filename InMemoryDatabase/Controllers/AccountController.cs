@@ -67,6 +67,10 @@ namespace InMemoryDatabase.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            ViewData["CurrentPage"] = "Log in";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
@@ -233,6 +237,10 @@ namespace InMemoryDatabase.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+            ViewData["CurrentPage"] = "Register";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
@@ -240,13 +248,10 @@ namespace InMemoryDatabase.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    BillingInformation = new BillingInformation()
-                    {
-                        FullName = model.FullName,
-                        StreetAddress = model.StreetAddress,
-                        PhoneNumber = model.PhoneNumber,
-                        Email = model.Email
-                    }
+                    FullName = model.FullName,
+                    StreetAddress = model.StreetAddress,
+                    PostalCode = model.PostalCode,
+                    PhoneNumber = model.PhoneNumber
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -265,10 +270,6 @@ namespace InMemoryDatabase.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ViewData["CurrentPage"] = "Register";
-            ViewData["Categories"] = GetAllCategories();
-            ViewData["CartItems"] = GetNumberOfCartItems();
-
             return View(model);
         }
 

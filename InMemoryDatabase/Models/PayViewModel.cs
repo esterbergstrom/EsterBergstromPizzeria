@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace InMemoryDatabase.Models
 {
-    public class BillingInformation
+    public class PayViewModel
     {
-        public int BillingInformationId { get; set; }
-
+        [Required]
         public string FullName { get; set; }
 
+        [Required]
         public string StreetAddress { get; set; }
 
+        [Required]
         [StringLength(5)]
         public string PostalCode { get; set; }
 
+        [Required]
         [Phone]
         public string PhoneNumber { get; set; }
 
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
     }
