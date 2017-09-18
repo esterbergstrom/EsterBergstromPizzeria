@@ -16,7 +16,7 @@ namespace InMemoryDatabase.Controllers
     public class HomeController : Controller
     {
         private const string CartItemsSessionKey = "_CartItems";
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public HomeController(ApplicationDbContext context)
         {
