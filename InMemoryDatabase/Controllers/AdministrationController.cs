@@ -50,6 +50,21 @@ namespace InMemoryDatabase.Controllers
             return View(categories);
         }
 
+        [HttpPost]
+        public IActionResult EditCategory(int categoryId, string name)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+            var category = _context.Categories.Single(x => x.CategoryId == categoryId);
+            category.Name = name;
+            _context.SaveChanges();
+
+            return RedirectToAction("Categories");
+        }
+
         private string[] GetAllCategories()
         {
             var categories = new List<string>();

@@ -1,0 +1,13 @@
+﻿@model Category
+
+<form asp-controller="Administration"
+      asp-action="EditCategory"
+      asp-route-categoryId="@Model.CategoryId"
+      asp-route-name="@Model.Name"
+      method="post">
+
+    <input asp-for="CategoryId" hidden />
+    <input asp-for="Name" />
+    <button type="submit">Spara</button>
+
+</form>

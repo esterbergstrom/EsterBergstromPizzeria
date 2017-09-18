@@ -1,6 +1,10 @@
 ﻿@model List<Category>
 
-@foreach(var category in Model)
-{
-    <p>@category.Name</p>
-}
+<ul>
+    @foreach (var category in Model)
+    {
+        <li>
+            @Html.Partial("_Category", category)
+        </li>
+    }
+</ul>
