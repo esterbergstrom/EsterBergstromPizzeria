@@ -7,6 +7,7 @@ using InMemoryDatabase.Data;
 using InMemoryDatabase.Extensions;
 using InMemoryDatabase.Models;
 using Microsoft.AspNetCore.Identity;
+using InMemoryDatabase.Models.AdministrationViewModels;
 
 namespace InMemoryDatabase.Controllers
 {
@@ -45,9 +46,31 @@ namespace InMemoryDatabase.Controllers
             ViewData["Categories"] = GetAllCategories();
             ViewData["CartItems"] = GetNumberOfCartItems();
 
-            var categories = _context.Categories.ToList();
+            var model = new CategoriesViewModel()
+            {
+                Categories = _context.Categories.ToList(),
+                NewCategory = new Category()
+            };
 
-            return View(categories);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateCategory(Category newCategory)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var category = new Category()
+            {
+                Name = newCategory.Name
+            };
+            _context.Add(category);
+            _context.SaveChanges();
+
+            return RedirectToAction("Categories");
         }
 
         [HttpPost]

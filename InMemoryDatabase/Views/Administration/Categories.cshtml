@@ -1,10 +1,21 @@
-﻿@model List<Category>
+﻿@using InMemoryDatabase.Models.AdministrationViewModels
+@model CategoriesViewModel
 
 <ul>
-    @foreach (var category in Model)
+    @foreach (var category in Model.Categories)
     {
         <li>
             @Html.Partial("_Category", category)
         </li>
     }
 </ul>
+
+<form asp-controller="Administration"
+      asp-action="CreateCategory"
+      asp-route-newCategory="@Model.NewCategory"
+      method="post">
+
+    <input asp-for="NewCategory.Name" />
+    <button type="submit">Skapa ny</button>
+
+</form>
