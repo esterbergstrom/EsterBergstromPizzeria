@@ -88,8 +88,17 @@ namespace InMemoryDatabase.Controllers
         [HttpPost]
         public IActionResult Pay(PayViewModel model)
         {
-            HttpContext.Session.Set<List<CartItem>>(CartItemsSessionKey, new List<CartItem>());
-            return RedirectToAction("Index", "Home");
+            ViewData["CurrentPage"] = "Payment";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
+            if (ModelState.IsValid)
+            {
+                HttpContext.Session.Set<List<CartItem>>(CartItemsSessionKey, new List<CartItem>());
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
         }
 
         private string[] GetAllCategories()
