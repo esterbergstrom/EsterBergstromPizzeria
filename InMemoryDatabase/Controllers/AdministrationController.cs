@@ -132,9 +132,12 @@ namespace InMemoryDatabase.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
-            _context.Dishes.Add(newDish);
-            _context.SaveChanges();
+
+            if (ModelState.IsValid)
+            {
+                _context.Dishes.Add(newDish);
+                _context.SaveChanges();
+            }
 
             return RedirectToAction("Dishes");
         }
