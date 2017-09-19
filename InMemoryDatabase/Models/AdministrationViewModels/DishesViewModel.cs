@@ -8,9 +8,7 @@ namespace InMemoryDatabase.Models.AdministrationViewModels
 {
     public class DishesViewModel
     {
-        public List<DishViewModel> DishViewModels { get; set; }
+        public List<Dish> Dishes { get; set; }
         public Dish NewDish { get; set; }
-
-        public SelectList Categories { get; set; }
     }
 }

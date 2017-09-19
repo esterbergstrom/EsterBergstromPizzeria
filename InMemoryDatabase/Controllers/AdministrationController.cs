@@ -102,24 +102,12 @@ namespace InMemoryDatabase.Controllers
             ViewData["Categories"] = GetAllCategories();
             ViewData["CartItems"] = GetNumberOfCartItems();
 
-            var categories = new SelectList(_context.Categories.ToList(), "CategoryId", "Name");
-
-            var dishViewModels = new List<DishViewModel>();
-            foreach (var dish in _context.Dishes.Include(x => x.Category).ToList())
-            {
-                var dishViewModel = new DishViewModel()
-                {
-                    Dish = dish,
-                    Categories = categories
-                };
-                dishViewModels.Add(dishViewModel);
-            }
+            ViewData["CategoriesSelectList"] = new SelectList(_context.Categories.ToList(), "CategoryId", "Name");
 
             var model = new DishesViewModel()
             {
-                DishViewModels = dishViewModels,
-                NewDish = new Dish(),
-                Categories = categories
+                Dishes = _context.Dishes.ToList(),
+                NewDish = new Dish()
             };
 
             return View(model);

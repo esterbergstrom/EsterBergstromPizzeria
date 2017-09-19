@@ -2,10 +2,10 @@
 @model DishesViewModel
 
 <ul>
-    @foreach (var dishViewModel in Model.DishViewModels)
+    @foreach (var dish in Model.Dishes)
     {
         <li>
-            @Html.Partial("_Dish", dishViewModel)
+            @Html.Partial("_Dish", dish)
         </li>
     }
 </ul>
@@ -37,7 +37,7 @@
 
     <div>
         <label asp-for="NewDish.CategoryId"></label>
-        <select asp-for="NewDish.CategoryId" asp-items="Model.Categories"></select>
+        <select asp-for="NewDish.CategoryId" asp-items="@ViewData["CategoriesSelectList"] as SelectList"></select>
     </div>
 
     <button type="submit">Skapa ny</button>
