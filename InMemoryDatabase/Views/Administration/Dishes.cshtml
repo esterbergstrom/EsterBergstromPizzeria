@@ -1,0 +1,45 @@
+﻿@using InMemoryDatabase.Models.AdministrationViewModels
+@model DishesViewModel
+
+<ul>
+    @foreach (var dishViewModel in Model.DishViewModels)
+    {
+        <li>
+            @Html.Partial("_Dish", dishViewModel)
+        </li>
+    }
+</ul>
+
+<form asp-controller="Administration"
+      asp-action="CreateDish"
+      asp-route-newDish="@Model.NewDish"
+      method="post">
+
+    <div>
+        <label asp-for="NewDish.Name"></label>
+        <input asp-for="NewDish.Name" />
+    </div>
+
+    <div>
+        <label asp-for="NewDish.Price"></label>
+        <input asp-for="NewDish.Price" />
+    </div>
+
+    <div>
+        <label asp-for="NewDish.Description"></label>
+        <input asp-for="NewDish.Description" />
+    </div>
+
+    <div>
+        <label asp-for="NewDish.ImageURL"></label>
+        <input asp-for="NewDish.ImageURL" />
+    </div>
+
+    <div>
+        <label asp-for="NewDish.CategoryId"></label>
+        <select asp-for="NewDish.CategoryId" asp-items="Model.Categories"></select>
+    </div>
+
+    <button type="submit">Skapa ny</button>
+
+</form>

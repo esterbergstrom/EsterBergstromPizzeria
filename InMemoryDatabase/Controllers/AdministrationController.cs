@@ -8,6 +8,8 @@ using InMemoryDatabase.Extensions;
 using InMemoryDatabase.Models;
 using Microsoft.AspNetCore.Identity;
 using InMemoryDatabase.Models.AdministrationViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace InMemoryDatabase.Controllers
 {
@@ -86,6 +88,79 @@ namespace InMemoryDatabase.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Categories");
+        }
+
+        [HttpGet]
+        public IActionResult Dishes()
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewData["CurrentPage"] = "Dishes";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
+            var categories = new SelectList(_context.Categories.ToList(), "CategoryId", "Name");
+
+            var dishViewModels = new List<DishViewModel>();
+            foreach (var dish in _context.Dishes.Include(x => x.Category).ToList())
+            {
+                var dishViewModel = new DishViewModel()
+                {
+                    Dish = dish,
+                    Categories = categories
+                };
+                dishViewModels.Add(dishViewModel);
+            }
+
+            var model = new DishesViewModel()
+            {
+                DishViewModels = dishViewModels,
+                NewDish = new Dish(),
+                Categories = categories
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateDish(Dish newDish)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+            _context.Dishes.Add(newDish);
+            _context.SaveChanges();
+
+            return RedirectToAction("Dishes");
+        }
+
+        [HttpPost]
+        public IActionResult EditDish(int dishId,
+            string name,
+            decimal price,
+            string description,
+            string imageURL,
+            int categoryId)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var dish = _context.Dishes.Single(x => x.DishId == dishId);
+            dish.Name = name;
+            dish.Price = price;
+            dish.Description = description;
+            dish.ImageURL = imageURL;
+            dish.Category = _context.Categories.Single(x => x.CategoryId == categoryId);
+            _context.SaveChanges();
+
+            return RedirectToAction("Dishes");
         }
 
         private string[] GetAllCategories()
