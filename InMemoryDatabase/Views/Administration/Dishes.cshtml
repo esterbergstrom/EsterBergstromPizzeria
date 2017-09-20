@@ -5,7 +5,14 @@
     @foreach (var dish in Model.Dishes)
     {
         <li>
-            @Html.Partial("_Dish", dish)
+            <form asp-controller="Administration"
+                  asp-action="Dish"
+                  asp-route-dishId="@dish.DishId"
+                  method="post">
+
+                <button type="submit">@dish.Name</button>
+
+            </form>
         </li>
     }
 </ul>

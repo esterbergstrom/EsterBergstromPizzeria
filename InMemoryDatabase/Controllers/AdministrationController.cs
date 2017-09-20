@@ -114,6 +114,25 @@ namespace InMemoryDatabase.Controllers
         }
 
         [HttpPost]
+        public IActionResult Dish(int dishId)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var dish = _context.Dishes.Single(x => x.DishId == dishId);
+
+            ViewData["CurrentPage"] = dish.Name;
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
+            ViewData["CategoriesSelectList"] = new SelectList(_context.Categories.ToList(), "CategoryId", "Name");
+
+            return View(dish);
+        }
+
+        [HttpPost]
         public IActionResult CreateDish(Dish newDish)
         {
             if (!User.IsInRole("Administrator"))

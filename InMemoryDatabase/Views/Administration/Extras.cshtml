@@ -1,10 +1,14 @@
 ﻿@using InMemoryDatabase.Models.AdministrationViewModels
 @model ExtrasViewModel
 
-@foreach (var extra in Model.Extras)
-{
-    @Html.Partial("_Extra", extra)
-}
+<ul>
+    @foreach (var extra in Model.Extras)
+    {
+        <li>
+            @Html.Partial("_Extra", extra)
+        </li>
+    }
+</ul>
 
 <form asp-controller="Administration"
       asp-action="CreateExtra"

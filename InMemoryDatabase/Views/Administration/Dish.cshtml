@@ -1,0 +1,42 @@
+﻿@model Dish
+
+<form asp-controller="Administration"
+      asp-action="EditDish"
+      asp-route-dishId="@Model.DishId"
+      asp-route-name="@Model.Name"
+      asp-route-price="@Model.Price"
+      asp-route-description="@Model.Description"
+      asp-route-imageURL="@Model.ImageURL"
+      asp-route-categoryId="@Model.CategoryId"
+      method="post">
+
+    <input asp-for="DishId" hidden />
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+    </div>
+
+    <div>
+        <label asp-for="Price"></label>
+        <input asp-for="Price" />
+    </div>
+
+    <div>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" />
+    </div>
+
+    <div>
+        <label asp-for="ImageURL"></label>
+        <input asp-for="ImageURL" />
+    </div>
+
+    <div>
+        <label asp-for="CategoryId"></label>
+        <select asp-for="CategoryId" asp-items="@ViewData["CategoriesSelectList"] as SelectList"></select>
+    </div>
+
+    <button type="submit">Spara</button>
+
+</form>
