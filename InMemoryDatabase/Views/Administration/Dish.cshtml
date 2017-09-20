@@ -1,4 +1,8 @@
 ﻿@model Dish
+@{ 
+    var newDishExtra = new DishExtra();
+    newDishExtra.DishId = Model.DishId;
+}
 
 <form asp-controller="Administration"
       asp-action="EditDish"
@@ -56,4 +60,19 @@
             </form>
         </li>
     }
+
+    <li>
+        <form asp-controller="Administration"
+              asp-action="CreateDishExtra"
+              asp-route-newDishExtra="@newDishExtra"
+              method="post">
+
+            <input asp-for="@newDishExtra.DishId" hidden />
+
+            <select asp-for="@newDishExtra.ExtraId" asp-items="@ViewData["ExtrasSelectList"] as SelectList"></select>
+
+            <button type="submit">Lägg till</button>
+
+        </form>
+    </li>
 </ul>

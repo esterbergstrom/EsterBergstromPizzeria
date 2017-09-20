@@ -132,6 +132,20 @@ namespace InMemoryDatabase.Controllers
 
             ViewData["CategoriesSelectList"] = new SelectList(_context.Categories.ToList(), "CategoryId", "Name");
 
+            var extras = _context.Extras.ToList();
+            foreach (var extra in _context.Extras.ToList())
+            {
+                foreach (var dishExtra in dish.DishExtras)
+                {
+                    if (extra.ExtraId == dishExtra.ExtraId)
+                    {
+                        extras.Remove(extra);
+                    }
+                }
+            }
+
+            ViewData["ExtrasSelectList"] = new SelectList(extras, "ExtraId", "Name");
+
             return View(dish);
         }
 
@@ -176,6 +190,21 @@ namespace InMemoryDatabase.Controllers
             return RedirectToAction("Dishes");
         }
 
+        [HttpPost]
+        public IActionResult CreateDishExtra(DishExtra newDishExtra)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            _context.DishExtras.Add(newDishExtra);
+            _context.SaveChanges();
+
+            return RedirectToAction("Dishes");
+        }
+
+        [HttpPost]
         public IActionResult DeleteDishExtra(int dishId, int extraId)
         {
             if (!User.IsInRole("Administrator"))
