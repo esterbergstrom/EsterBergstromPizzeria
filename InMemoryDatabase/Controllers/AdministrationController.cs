@@ -154,6 +154,66 @@ namespace InMemoryDatabase.Controllers
             return RedirectToAction("Dishes");
         }
 
+        [HttpGet]
+        public IActionResult Extras()
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewData["CurrentPage"] = "Tillägg";
+            ViewData["Categories"] = GetAllCategories();
+            ViewData["CartItems"] = GetNumberOfCartItems();
+
+            var extras = _context.Extras.ToList();
+
+            var model = new ExtrasViewModel()
+            {
+                Extras = extras,
+                NewExtra = new Extra()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateExtra(Extra newExtra)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Extras.Add(newExtra);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Extras");
+        }
+
+        [HttpPost]
+        public IActionResult EditExtra(int extraId,
+            string name,
+            decimal price,
+            string imageURL)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var extra = _context.Extras.Single(x => x.ExtraId == extraId);
+            extra.Name = name;
+            extra.Price = price;
+            extra.ImageURL = imageURL;
+            _context.SaveChanges();
+
+            return RedirectToAction("Extras");
+        }
+
         private string[] GetAllCategories()
         {
             var categories = new List<string>();
