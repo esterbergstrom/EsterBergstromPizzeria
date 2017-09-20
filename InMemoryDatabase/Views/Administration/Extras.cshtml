@@ -1,0 +1,31 @@
+﻿@using InMemoryDatabase.Models.AdministrationViewModels
+@model ExtrasViewModel
+
+@foreach (var extra in Model.Extras)
+{
+    @Html.Partial("_Extra", extra)
+}
+
+<form asp-controller="Administration"
+      asp-action="CreateExtra"
+      asp-route-newDish="@Model.NewExtra"
+      method="post">
+
+    <div>
+        <label asp-for="NewExtra.Name"></label>
+        <input asp-for="NewExtra.Name" />
+    </div>
+
+    <div>
+        <label asp-for="NewExtra.Price"></label>
+        <input asp-for="NewExtra.Price" />
+    </div>
+
+    <div>
+        <label asp-for="NewExtra.ImageURL"></label>
+        <input asp-for="NewExtra.ImageURL" />
+    </div>
+
+    <button type="submit">Skapa ny</button>
+
+</form>

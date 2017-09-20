@@ -1,0 +1,30 @@
+﻿@model Extra
+
+<form asp-controller="Administration"
+      asp-action="EditExtra"
+      asp-route-extraId="@Model.ExtraId"
+      asp-route-name="@Model.Name"
+      asp-route-price="@Model.Price"
+      asp-route-imageURL="@Model.ImageURL"
+      method="post">
+
+    <input asp-for="ExtraId" hidden />
+
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+    </div>
+
+    <div>
+        <label asp-for="Price"></label>
+        <input asp-for="Price" />
+    </div>
+
+    <div>
+        <label asp-for="ImageURL"></label>
+        <input asp-for="ImageURL" />
+    </div>
+
+    <button type="submit">Spara</button>
+
+</form>

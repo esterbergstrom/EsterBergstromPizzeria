@@ -205,11 +205,14 @@ namespace InMemoryDatabase.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var extra = _context.Extras.Single(x => x.ExtraId == extraId);
-            extra.Name = name;
-            extra.Price = price;
-            extra.ImageURL = imageURL;
-            _context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                var extra = _context.Extras.Single(x => x.ExtraId == extraId);
+                extra.Name = name;
+                extra.Price = price;
+                extra.ImageURL = imageURL;
+                _context.SaveChanges();
+            }
 
             return RedirectToAction("Extras");
         }
