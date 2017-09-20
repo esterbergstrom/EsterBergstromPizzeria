@@ -40,3 +40,20 @@
     <button type="submit">Spara</button>
 
 </form>
+
+<ul>
+    @foreach (var dishExtra in Model.DishExtras.ToList())
+    {
+        <li>
+            <form asp-controller="Administration"
+                  asp-action="DeleteDishExtra"
+                  asp-route-dishId="@dishExtra.DishId"
+                  asp-route-extraId="@dishExtra.ExtraId"
+                  method="post">
+
+                <button type="submit">@dishExtra.Extra.Name</button>
+
+            </form>
+        </li>
+    }
+</ul>

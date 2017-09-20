@@ -121,7 +121,10 @@ namespace InMemoryDatabase.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var dish = _context.Dishes.Single(x => x.DishId == dishId);
+            var dish = _context.Dishes
+                .Include(x => x.DishExtras)
+                .ThenInclude(x => x.Extra)
+                .Single(x => x.DishId == dishId);
 
             ViewData["CurrentPage"] = dish.Name;
             ViewData["Categories"] = GetAllCategories();
@@ -168,6 +171,20 @@ namespace InMemoryDatabase.Controllers
             dish.Description = description;
             dish.ImageURL = imageURL;
             dish.Category = _context.Categories.Single(x => x.CategoryId == categoryId);
+            _context.SaveChanges();
+
+            return RedirectToAction("Dishes");
+        }
+
+        public IActionResult DeleteDishExtra(int dishId, int extraId)
+        {
+            if (!User.IsInRole("Administrator"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var dishExtra = _context.DishExtras.Single(x => x.DishId == dishId && x.ExtraId == extraId);
+            _context.DishExtras.Remove(dishExtra);
             _context.SaveChanges();
 
             return RedirectToAction("Dishes");
